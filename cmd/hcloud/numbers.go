@@ -48,7 +48,7 @@ type DaySummary struct {
 }
 
 type GetNumber struct {
-	Item NumberConfig `json:"item"`
+	Data NumberConfig `json:"data"`
 }
 
 type NumberConfig struct {
