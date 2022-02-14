@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	BaseURLV1 = "http://localhost:3500"
+	BaseURLV1 = "https://api.hotchilli.com"
 )
 
 type Client struct {
