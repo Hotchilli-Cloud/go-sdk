@@ -17,6 +17,7 @@ type Client struct {
 	apiKey     string
 	HTTPClient *http.Client
 }
+
 type SuccessResponse struct {
 	Status  string      `json:"status"`
 	Message string      `json:"message"`

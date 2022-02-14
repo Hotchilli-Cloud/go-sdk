@@ -163,7 +163,7 @@ func (c *Client) GetSummary() (*GetSummaryType, error) {
 	return &res, nil
 }
 
-func (c *Client) GetNumber() (*GetNumber, error) {
+func (c *Client) GetNumber() (*NumberConfig, error) {
 	postBody, _ := json.Marshal(map[string]string{
 		"function": "NumberSetup",
 		"Number":   "02033901000",
@@ -172,12 +172,12 @@ func (c *Client) GetNumber() (*GetNumber, error) {
 
 	requestBody := bytes.NewBuffer(postBody)
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/numbers/", c.BaseURL), requestBody)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/node-api/numbers", c.BaseURL), requestBody)
 	if err != nil {
 		return nil, err
 	}
 
-	res := GetNumber{}
+	res := NumberConfig{}
 	if err := c.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
