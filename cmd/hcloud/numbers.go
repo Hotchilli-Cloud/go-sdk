@@ -172,7 +172,7 @@ func (c *Client) GetNumber() (*GetNumber, error) {
 
 	requestBody := bytes.NewBuffer(postBody)
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/get-number.html", c.BaseURL), requestBody)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/numbers/", c.BaseURL), requestBody)
 	if err != nil {
 		return nil, err
 	}
