@@ -58,10 +58,10 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) error {
 		}
 		return fmt.Errorf("Unknown errro, status code : %d", res.StatusCode)
 	}
-
 	fullResponse := SuccessResponse{
 		Data: v,
 	}
+
 	if err = json.NewDecoder(res.Body).Decode(&fullResponse); err != nil {
 		return err
 	}
