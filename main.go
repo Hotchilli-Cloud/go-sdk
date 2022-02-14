@@ -8,7 +8,7 @@ import (
 func main() {
 	c := hcloud.NewClient("hcloud_test_nwkrhiu2hwfsafwq")
 
-	res, err := c.GetNumber()
+	res, err := c.GetNumber("")
 	if err != nil {
 		fmt.Print(err)
 	}
