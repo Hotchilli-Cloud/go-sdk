@@ -11,6 +11,17 @@ type CreateZoneRequest struct {
 	domain string `json:"domain"`
 }
 
+type GetZoneResponse struct {
+	ZoneName string `json:"ZoneName"`
+	OrgID    string `json:"OrgID"`
+	NS1      string `json:"ns1"`
+	NS2      string `json:"ns2"`
+	NS3      string `json:"ns3"`
+	NS4      string `json:"ns4"`
+	NS5      string `json:"ns5"`
+	NS6      string `json:"ns6"`
+}
+
 type CreateZoneResponse struct {
 }
 
@@ -83,6 +94,20 @@ func (c *Client) DeleteZone(domain string) (string, error) {
 		return "error", err
 	}
 	return "success", nil
+}
+
+func (c *Client) GetZone(domain string) (*GetZoneResponse, error) {
+
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/node-api/dns/zones/%s", c.BaseURL, domain), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	res := GetZoneResponse{}
+	if err := c.sendRequest(req, &res); err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 func (c *Client) CreateRecord(domain string, record *CreateRecordRequest) (*Record, error) {
