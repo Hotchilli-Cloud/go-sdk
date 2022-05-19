@@ -24,6 +24,22 @@ type SessionType struct {
 	LineItems         []string    `json:"line_items"`
 }
 
+type ItemType struct {
+	ID            string      `json:"id"`
+	Object        string      `json:"object"`
+	CreatedTime   int         `json:"created_time"`
+	SessionId     string      `json:"session_id"`
+	Type          string      `json:"type"`
+	AutoTopup     bool        `json:"auto_topup"`
+	AutoRenew     bool        `json:"auto_renew"`
+	BillingPeriod string      `json:"billing_period"`
+	CartName      string      `json:"cart_name"`
+	Period        int         `json:"period"`
+	Item          interface{} `json:"item"`
+	Subtotal      float32     `json:"subtotal"`
+	metadata      interface{} `json:"metadata"`
+}
+
 func (c *Client) GetCheckoutSession(sessionId string) (*SessionType, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/node-api/checkout/session/%s?rt=sdk", c.BaseURL, sessionId), nil)
 	if err != nil {
@@ -44,6 +60,19 @@ func (c *Client) CreateCheckoutSession() (*SessionType, error) {
 	}
 
 	res := SessionType{}
+	if err := c.sendRequest(req, &res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+func (c *Client) CreateCheckoutSessionItem(sessionId string, item ItemType) (*ItemType, error) {
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/node-api/checkout/session/item/%s?rt=sdk", c.BaseURL, sessionId), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	res := ItemType{}
 	if err := c.sendRequest(req, &res); err != nil {
 		return nil, err
 	}
