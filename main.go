@@ -26,7 +26,7 @@ func main() {
 		fmt.Print(err)
 	}
 
-	fmt.Println(res.RecordName)
+	fmt.Println(res.DNSRecordID)
 
 	//res, err := c.CreateCheckoutSessionItem("cs_yx6ddpcKqNDuYbhFyYkAv3yqKWwnxFJrx4P85Xp1OLQVktZQ", hcloud.ItemType{
 	//	ID:            "",

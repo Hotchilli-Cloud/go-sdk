@@ -85,7 +85,7 @@ func (c *Client) DeleteZone(domain string) (string, error) {
 	return "success", nil
 }
 
-func (c *Client) CreateRecord(domain string, record *CreateRecordRequest) (string, error) {
+func (c *Client) CreateRecord(domain string, record *CreateRecordRequest) (*Record, error) {
 
 	record = &CreateRecordRequest{
 		Priority:    record.Priority,
@@ -99,14 +99,14 @@ func (c *Client) CreateRecord(domain string, record *CreateRecordRequest) (strin
 
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/node-api/dns/zones/%s/records", c.BaseURL, domain), bytes.NewBuffer(body))
 	if err != nil {
-		return "error", err
+		return nil, err
 	}
 
-	res := BlankResponse{}
+	res := Record{}
 	if err := c.sendRequest(req, &res); err != nil {
-		return "error", err
+		return nil, err
 	}
-	return "success", nil
+	return &res, nil
 }
 
 func (c *Client) GetRecord(domain string, recordId string) (*Record, error) {
