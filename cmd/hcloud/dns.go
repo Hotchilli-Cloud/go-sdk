@@ -136,3 +136,27 @@ func (c *Client) DeleteRecord(domain string, recordId string) (string, error) {
 	}
 	return "success", nil
 }
+
+func (c *Client) UpdateRecord(domain string, recordId string, record *CreateRecordRequest) (string, error) {
+
+	record = &CreateRecordRequest{
+		Priority:    record.Priority,
+		RecordName:  record.RecordName,
+		RecordType:  record.RecordType,
+		RecordValue: record.RecordValue,
+		TTL:         record.TTL,
+	}
+
+	body, _ := json.Marshal(record)
+
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/node-api/dns/zones/%s/records/%s", c.BaseURL, domain, recordId), bytes.NewBuffer(body))
+	if err != nil {
+		return "", err
+	}
+
+	res := BlankResponse{}
+	if err := c.sendRequest(req, &res); err != nil {
+		return "", err
+	}
+	return "success", nil
+}
