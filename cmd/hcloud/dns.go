@@ -149,7 +149,7 @@ func (c *Client) UpdateRecord(domain string, recordId string, record *CreateReco
 
 	body, _ := json.Marshal(record)
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/node-api/dns/zones/%s/records/%s", c.BaseURL, domain, recordId), bytes.NewBuffer(body))
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/node-api/dns/zones/%s/records/%s", c.BaseURL, domain, recordId), bytes.NewBuffer(body))
 	if err != nil {
 		return "", err
 	}
